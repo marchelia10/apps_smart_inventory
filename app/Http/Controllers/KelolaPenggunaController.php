@@ -9,15 +9,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
+
 class KelolaPenggunaController extends Controller
 {
     public function index()
     {
-        $kelolapengguna = User::all();
+        $kelolapengguna = User::all(); // ambil semua user
 
         return view('kelolapengguna', compact('kelolapengguna'));
     }
 
+    // Method untuk menambah pengguna baru
     public function store(Request $request)
     {
         $request->validate([
@@ -36,7 +38,6 @@ class KelolaPenggunaController extends Controller
         ]);
 
         try {
-
             $user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
@@ -46,14 +47,13 @@ class KelolaPenggunaController extends Controller
 
             Log::info('User added by admin:', [
                 'user' => $user,
-                'added_by' => Auth::user()->id
+                'added_by' => Auth::user()->id // Sekarang Auth sudah terimport
             ]);
 
             return redirect()
                 ->route('kelolapengguna.index')
                 ->with('success', 'Pengguna baru berhasil ditambahkan!');
         } catch (\Exception $e) {
-
             Log::error('Failed to add user:', [
                 'error' => $e->getMessage()
             ]);
@@ -63,58 +63,24 @@ class KelolaPenggunaController extends Controller
         }
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'role' => 'required|in:admin,pengguna',
         ]);
 
         $user = User::findOrFail($id);
-
-        if (
-            $user->id === Auth::user()->id &&
-            $request->role !== $user->role
-        ) {
-            return redirect()
-                ->route('kelolapengguna.index')
-                ->with('error', 'Anda tidak dapat mengubah role sendiri!');
-        }
-
         $user->role = $request->role;
-
         $user->save();
 
-        return redirect()
-            ->route('kelolapengguna.index')
-            ->with('success', 'Role pengguna berhasil diperbarui.');
+        return redirect()->route('kelolapengguna.index')->with('success', 'Role pengguna diperbarui.');
     }
 
-    public function destroy(int $id)
+    public function destroy($id)
     {
         $user = User::findOrFail($id);
-
-        if ($user->id === Auth::user()->id) {
-
-            return redirect()
-                ->route('kelolapengguna.index')
-                ->with('error', 'Anda tidak dapat menghapus akun sendiri!');
-        }
-
-        $hasActiveLoans = Peminjaman::where('user_id', $id)
-            ->where('status', 'dipinjam')
-            ->exists();
-
-        if ($hasActiveLoans) {
-
-            return redirect()
-                ->route('kelolapengguna.index')
-                ->with('error', 'Pengguna ini masih memiliki peminjaman aktif!');
-        }
-
         $user->delete();
 
-        return redirect()
-            ->route('kelolapengguna.index')
-            ->with('success', 'Data pengguna berhasil dihapus.');
+        return redirect()->route('kelolapengguna.index')->with('success', 'Data pengguna berhasil dihapus.');
     }
 }
