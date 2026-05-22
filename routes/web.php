@@ -92,6 +92,7 @@ Route::get('/riwayat-pengguna', [PeminjamanController::class, 'riwayatPengguna']
 
 //kelola pengguna
 Route::get('/kelolapengguna', [KelolaPenggunaController::class, 'index'])->name('kelolapengguna.index');
+Route::post('/kelola-pengguna', [KelolaPenggunaController::class, 'store'])->name('kelolapengguna.store');
 Route::put('/kelola-pengguna/{id}', [KelolaPenggunaController::class, 'update'])->name('kelolapengguna.update');
 Route::delete('/kelola-pengguna/{id}', [KelolaPenggunaController::class, 'destroy'])->name('kelolapengguna.destroy');
 
