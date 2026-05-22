@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     @include('partials.head')
     <style>
@@ -9,8 +10,13 @@
     </style>
     <link rel="preload" href="{{ url('image/background_login.png') }}" as="image">
 </head>
+
+@php
+$bgImage = asset('image/background_login.png');
+@endphp
+
 <body class="bg-gray-200 min-h-screen bg-cover bg-center flex justify-end items-center pr-28"
-    style="background-image: url('{{ url('image/background_login.png') }}');">
+    style="background-image: url('{{ $bgImage }}');">
 
     <!-- Login Card -->
     <div class="bg-white bg-opacity-90 backdrop-blur-md rounded-xl shadow-xl w-full max-w-md p-8">
@@ -21,9 +27,9 @@
 
             <!-- Error Notification -->
             @if (session('error'))
-                <div class="p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                    {{ session('error') }}
-                </div>
+            <div class="p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                {{ session('error') }}
+            </div>
             @endif
 
             <!-- Username -->
@@ -40,7 +46,7 @@
                         class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 @error('username')
-                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -70,7 +76,7 @@
                     </button>
                 </div>
                 @error('password')
-                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -90,13 +96,13 @@
 
     <!-- JavaScript: toggle mata -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('togglePassword');
             const input = document.getElementById('password');
             const eyeShow = document.getElementById('eyeShow');
             const eyeHide = document.getElementById('eyeHide');
 
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
                 if (input.type === 'password') {
                     input.type = 'text';
                     eyeShow.classList.add('hidden');
@@ -112,9 +118,10 @@
 
     <!-- JavaScript pop-up jika success -->
     @if (session('success'))
-        <script>
-            alert("{{ session('success') }}");
-        </script>
+    <script>
+        alert("{{ session('success') }}");
+    </script>
     @endif
 </body>
+
 </html>
