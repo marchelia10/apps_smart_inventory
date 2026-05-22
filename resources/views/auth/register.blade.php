@@ -24,10 +24,10 @@
             <!-- Input Group Template -->
             @php
                 $inputs = [
-                    ['id' => 'email', 'label' => 'Email', 'type' => 'email', 'icon' => 'M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
-                    ['id' => 'nama_mahasiswa', 'label' => 'Nama Mahasiswa', 'type' => 'text', 'icon' => 'M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z'],
-['id' => 'nim', 'label' => 'NIM', 'type' => 'text', 'icon' => 'M3 4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm4 3a2 2 0 104 0 2 2 0 00-4 0zm0 4h8v1H7v-1zm0 2h8v1H7v-1z'],
-                    ['id' => 'username', 'label' => 'Nama Pengguna', 'type' => 'text', 'icon' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0z M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
+                    ['id' => 'nama_lengkap', 'label' => 'Nama Lengkap', 'type' => 'text', 'icon' => 'M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
+                    ['id' => 'email', 'label' => 'Email', 'type' => 'email', 'icon' => 'M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z'],
+['id' => 'no badge', 'label' => 'No badge', 'type' => 'text', 'icon' => 'M3 4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm4 3a2 2 0 104 0 2 2 0 00-4 0zm0 4h8v1H7v-1zm0 2h8v1H7v-1z'],
+                    ['id' => 'No Telephone', 'label' => 'No Telephone', 'type' => 'text', 'icon' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0z M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
                 ];
             @endphp
 

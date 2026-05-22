@@ -10,7 +10,7 @@
     <div class="relative z-10 flex flex-col items-center justify-center w-full max-w-md p-6 bg-white rounded-lg shadow-md md:max-w-lg">
         <h1 class="mb-6 text-2xl font-bold text-center">Daftar Akun</h1>
         <form class="space-y-4">
-            <input type="text" placeholder="Nama Pengguna" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            <input type="text" placeholder="Nama Lengkap" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <input type="email" placeholder="Email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <input type="password" placeholder="Kata Sandi" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <input type="password" placeholder="Konfirmasi Sandi" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
