@@ -53,12 +53,10 @@
                             </span>
                         </td>
                         <td class="py-3 px-4 text-center">
+                            <!-- Ubah ini: panggil fungsi openEditModal langsung dengan onclick -->
                             <button
-                                class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-1 edit-btn"
-                                data-id="{{ $user->id }}"
-                                data-username="{{ addslashes($user->username) }}"
-                                data-email="{{ addslashes($user->email) }}"
-                                data-role="{{ $user->role }}">
+                                onclick="openEditModal({{ $user->id }}, '{{ addslashes($user->username) }}', '{{ addslashes($user->email) }}', '{{ $user->role }}')"
+                                class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded mr-1">
                                 Edit
                             </button>
                             <form action="{{ route('kelolapengguna.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
@@ -173,26 +171,55 @@
 
     // Fungsi untuk Modal Edit
     function openEditModal(id, username, email, role) {
-        document.getElementById('editModal').classList.remove('hidden');
+        console.log('Opening edit modal for user:', id, username, email, role); // Debugging
 
-        document.getElementById('editUsername').value = username;
-        document.getElementById('editEmail').value = email;
-        document.getElementById('editRole').value = role;
+        const editModal = document.getElementById('editModal');
+        const editUsername = document.getElementById('editUsername');
+        const editEmail = document.getElementById('editEmail');
+        const editRole = document.getElementById('editRole');
+        const editForm = document.getElementById('editForm');
 
-        document.getElementById('editForm').action = `/kelola-pengguna/${id}`;
+        if (!editModal || !editUsername || !editEmail || !editRole || !editForm) {
+            console.error('Modal elements not found!');
+            return;
+        }
+
+        // Isi data ke modal
+        editUsername.value = username;
+        editEmail.value = email;
+        editRole.value = role;
+
+        // Set action form
+        editForm.action = `/kelola-pengguna/${id}`;
+
+        // Tampilkan modal
+        editModal.classList.remove('hidden');
+
+        // Tambahkan efek fade in
+        editModal.style.opacity = '0';
+        setTimeout(() => {
+            editModal.style.opacity = '1';
+        }, 10);
     }
 
     function closeEditModal() {
-        document.getElementById('editModal').classList.add('hidden');
+        const editModal = document.getElementById('editModal');
+        if (editModal) {
+            editModal.classList.add('hidden');
+            // Reset opacity
+            editModal.style.opacity = '';
+        }
     }
 
     // Fungsi toggle password visibility
     function togglePassword(inputId) {
         const input = document.getElementById(inputId);
-        if (input.type === 'password') {
-            input.type = 'text';
-        } else {
-            input.type = 'password';
+        if (input) {
+            if (input.type === 'password') {
+                input.type = 'text';
+            } else {
+                input.type = 'password';
+            }
         }
     }
 
@@ -208,12 +235,40 @@
             closeEditModal();
         }
     }
+
+    // Debug: Cek apakah fungsi tersedia
+    console.log('Functions loaded: openEditModal', typeof openEditModal);
 </script>
 
 <style>
     /* Smooth transition untuk modal */
     .fixed {
         transition: all 0.3s ease;
+    }
+
+    /* Animasi untuk modal */
+    #editModal,
+    #addModal {
+        transition: opacity 0.3s ease;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
     }
 </style>
 @endsection
