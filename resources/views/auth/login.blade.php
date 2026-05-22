@@ -22,19 +22,37 @@ $bgImage = asset('image/background_login.png');
     <div class="bg-white bg-opacity-90 backdrop-blur-md rounded-xl shadow-xl w-full max-w-md p-8">
         <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Masuk Akun</h1>
 
+        <!-- Tampilkan pesan success dari registrasi -->
+        @if (session('success'))
+        <div class="p-3 bg-green-100 text-green-700 rounded-lg text-sm mb-4">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        <!-- Tampilkan pesan error -->
+        @if (session('error'))
+        <div class="p-3 bg-red-100 text-red-700 rounded-lg text-sm mb-4">
+            {{ session('error') }}
+        </div>
+        @endif
+
+        <!-- Tampilkan error validasi -->
+        @if ($errors->any())
+        <div class="p-3 bg-red-100 text-red-700 rounded-lg text-sm mb-4">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
         <form action="{{ route('login.post') }}" method="POST" class="space-y-4">
             @csrf
 
-            <!-- Error Notification -->
-            @if (session('error'))
-            <div class="p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                {{ session('error') }}
-            </div>
-            @endif
-
-            <!-- Username -->
+            <!-- Login Field (Username atau Email) -->
             <div>
-                <label for="username" class="block text-sm font-medium text-gray-700">Nama Pengguna</label>
+                <label for="login" class="block text-sm font-medium text-gray-700">Nama Pengguna atau Email</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,12 +60,10 @@ $bgImage = asset('image/background_login.png');
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </div>
-                    <input type="text" name="username" id="username" required value="{{ old('username') }}"
+                    <input type="text" name="login" id="login" required value="{{ old('login') }}"
+                        placeholder="Masukkan username atau email"
                         class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-                @error('username')
-                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Password -->
@@ -75,9 +91,6 @@ $bgImage = asset('image/background_login.png');
                         </svg>
                     </button>
                 </div>
-                @error('password')
-                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Login Button -->
@@ -102,26 +115,21 @@ $bgImage = asset('image/background_login.png');
             const eyeShow = document.getElementById('eyeShow');
             const eyeHide = document.getElementById('eyeHide');
 
-            btn.addEventListener('click', function() {
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    eyeShow.classList.add('hidden');
-                    eyeHide.classList.remove('hidden');
-                } else {
-                    input.type = 'password';
-                    eyeShow.classList.remove('hidden');
-                    eyeHide.classList.add('hidden');
-                }
-            });
+            if (btn && input && eyeShow && eyeHide) {
+                btn.addEventListener('click', function() {
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        eyeShow.classList.add('hidden');
+                        eyeHide.classList.remove('hidden');
+                    } else {
+                        input.type = 'password';
+                        eyeShow.classList.remove('hidden');
+                        eyeHide.classList.add('hidden');
+                    }
+                });
+            }
         });
     </script>
-
-    <!-- JavaScript pop-up jika success -->
-    @if (session('success'))
-    <script>
-        alert("{{ session('success') }}");
-    </script>
-    @endif
 </body>
 
 </html>
